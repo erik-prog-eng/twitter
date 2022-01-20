@@ -22,7 +22,8 @@ module Twitter
             },
           }
           json_options[:welcome_message][:name] = name if name
-          welcome_message_wrapper = perform_request_with_object(:json_post, '/1.1/direct_messages/welcome_messages/new.json', json_options.merge!(options), Twitter::DirectMessages::WelcomeMessageWrapper)
+          json_options[:welcome_message][:message_data].merge!(options)
+          welcome_message_wrapper = perform_request_with_object(:json_post, '/1.1/direct_messages/welcome_messages/new.json', json_options, Twitter::DirectMessages::WelcomeMessageWrapper)
           welcome_message_wrapper.welcome_message
         end
 
@@ -39,7 +40,7 @@ module Twitter
               text: text,
             },
           }
-          welcome_message_wrapper = perform_request_with_object(:json_put, '/1.1/direct_messages/welcome_messages/update.json', json_options.merge!(options), Twitter::DirectMessages::WelcomeMessageWrapper, params)
+          welcome_message_wrapper = perform_request_with_object(:json_put, '/1.1/direct_messages/welcome_messages/update.json', json_options[:message_data].merge!(options), Twitter::DirectMessages::WelcomeMessageWrapper, params)
           welcome_message_wrapper.welcome_message
         end
 
